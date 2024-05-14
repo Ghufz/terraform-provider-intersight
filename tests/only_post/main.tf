@@ -107,9 +107,10 @@ resource "intersight_bulk_mo_cloner" "clone_server1"{
        }
 }
 
-resource "intersight_server_profile" "server_profile"{
-	depends_on = [intersight_bulk_mo_cloner.clone_server1]
-	name = "demotesting_DERIVED-4"
-	description = "Sample description"
-}
+#
+#resource "intersight_server_profile" "server_profile"{
+#	depends_on = [intersight_bulk_mo_cloner.clone_server1]
+#	name = "demotesting_DERIVED-4"
+#	description = "Sample description"
+#}
 
