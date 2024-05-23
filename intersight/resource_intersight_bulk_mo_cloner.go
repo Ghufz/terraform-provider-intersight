@@ -2284,8 +2284,8 @@ func resourceBulkMoClonerRead(c context.Context, d *schema.ResourceData, meta in
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	var de diag.Diagnostics
 	conn := meta.(*Config)
-	if id, ok := d["Id"]; !ok {
-		return d
+	if id, ok := d.GetOk("Id"); !ok {
+		return de
 	}
 	r := conn.ApiClient.BulkApi.GetBulkMoClonerByMoid(conn.ctx, d.Id())
 	s, _, responseErr := r.Execute()
