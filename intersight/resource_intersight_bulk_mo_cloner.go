@@ -2275,16 +2275,20 @@ func resourceBulkMoClonerCreate(c context.Context, d *schema.ResourceData, meta 
 		}
 		return diag.Errorf("error occurred while creating BulkMoCloner: %s", responseErr.Error())
 	}
+	if len(resultMo.GetMoid()) != 0{
 	log.Printf("Moid: %s", resultMo.GetMoid())
 	d.SetId(resultMo.GetMoid())
 	return append(de, resourceBulkMoClonerRead(c, d, meta)...)
+	}
+	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
+	return de
 }
 
 func resourceBulkMoClonerRead(c context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	var de diag.Diagnostics
 	conn := meta.(*Config)
-	if _, ok := d.GetOk("Id"); !ok {
+	if len(d.Id()) == 0 {
 		return de
 	}
 	r := conn.ApiClient.BulkApi.GetBulkMoClonerByMoid(conn.ctx, d.Id())
